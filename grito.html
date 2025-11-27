@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRITA - DESANGRAR(SE)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #8b1a1a;
+            margin-bottom: 40px;
+            letter-spacing: 0.2em;
+            text-shadow: 2px 2px 0 #2d0d0d;
+        }
+
+        .instruction {
+            font-size: 1.2rem;
+            color: #6b8e6b;
+            margin-bottom: 30px;
+            letter-spacing: 0.1em;
+        }
+
+        #screamInput {
+            width: 100%;
+            background-color: #0f0f0f;
+            border: 2px solid #4a1515;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            padding: 20px;
+            text-align: center;
+            letter-spacing: 0.1em;
+            outline: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        #screamInput:focus {
+            border-color: #8b1a1a;
+            box-shadow: 0 0 20px rgba(139, 26, 26, 0.5);
+        }
+
+        #screamInput::placeholder {
+            color: #4a4a4a;
+            text-transform: none;
+        }
+
+        .button-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        button {
+            background-color: #0f0f0f;
+            border: 2px solid #8b1a1a;
+            color: #8b1a1a;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            padding: 15px 40px;
+            cursor: pointer;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #8b1a1a;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 26, 26, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            border-color: #6b8e6b;
+            color: #6b8e6b;
+        }
+
+        .back-button:hover {
+            background-color: #6b8e6b;
+            color: #0a0a0a;
+        }
+
+        .scream-text {
+            position: fixed;
+            font-size: 2rem;
+            color: #8b1a1a;
+            font-weight: bold;
+            pointer-events: none;
+            animation: explode 2s forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3) rotate(var(--rotation));
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #8b1a1a;
+            opacity: 0;
+            pointer-events: none;
+            animation: flash 0.3s;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.3; }
+        }
+
+        .void-message {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+
+        /* Efecto de partículas de fondo */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background-color: #8b1a1a;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GRITA AL VACÍO</h1>
+        <p class="instruction">Escribe lo que necesitas liberar. Presiona ENTER para desangrarlo.</p>
+        
+        <input 
+            type="text" 
+            id="screamInput" 
+            placeholder="escribe aquí tu convulsión..."
+            maxlength="100"
+        >
+        
+        <div class="button-container">
+            <button onclick="screamIntoVoid()">DESANGRAR</button>
+            <button class="back-button" onclick="goBack()">VOLVER</button>
+        </div>
+
+        <p class="void-message">
+            El vacío escucha. El vacío guarda. El vacío no juzga.<br>
+            Tu grito se disuelve en la oscuridad.
+        </p>
+    </div>
+
+    <script>
+        const input = document.getElementById('screamInput');
+        let screamCount = 0;
+
+        // Permitir ENTER para gritar
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                screamIntoVoid();
+            }
+        });
+
+        function screamIntoVoid() {
+            const text = input.value.trim();
+            
+            if (text === '') {
+                // Shake si está vacío
+                input.classList.add('shake');
+                setTimeout(() => input.classList.remove('shake'), 500);
+                return;
+            }
+
+            screamCount++;
+
+            // Flash de pantalla
+            const flash = document.createElement('div');
+            flash.className = 'flash';
+            document.body.appendChild(flash);
+            setTimeout(() => flash.remove(), 300);
+
+            // Shake del body
+            document.body.classList.add('shake');
+            setTimeout(() => document.body.classList.remove('shake'), 500);
+
+            // Crear múltiples textos explotando
+            const numberOfScreams = Math.min(20 + screamCount * 2, 50);
+            
+            for (let i = 0; i < numberOfScreams; i++) {
+                setTimeout(() => {
+                    createScreamExplosion(text);
+                }, i * 30);
+            }
+
+            // Crear partículas
+            createParticles();
+
+            // Limpiar input
+            input.value = '';
+            
+            // Mensaje temporal
+            if (screamCount === 5) {
+                showTemporaryMessage('Sigue... no te detengas...');
+            } else if (screamCount === 10) {
+                showTemporaryMessage('El vacío absorbe tu dolor...');
+            } else if (screamCount === 20) {
+                showTemporaryMessage('Ya no cabe más adentro...');
+            }
+        }
+
+        function createScreamExplosion(text) {
+            const scream = document.createElement('div');
+            scream.className = 'scream-text';
+            scream.textContent = text.toUpperCase();
+            
+            // Posición inicial cerca del centro
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const offsetX = (Math.random() - 0.5) * 200;
+            const offsetY = (Math.random() - 0.5) * 200;
+            
+            scream.style.left = (centerX + offsetX) + 'px';
+            scream.style.top = (centerY + offsetY) + 'px';
+            
+            // Rotación aleatoria
+            const rotation = (Math.random() - 0.5) * 720;
+            scream.style.setProperty('--rotation', rotation + 'deg');
+            
+            // Color variable
+            const colors = ['#8b1a1a', '#6b1a1a', '#ab1a1a', '#9b1a1a'];
+            scream.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(scream);
+            
+            // Eliminar después de la animación
+            setTimeout(() => scream.remove(), 2000);
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const startX = window.innerWidth / 2;
+                const startY = window.innerHeight / 2;
+                const endX = Math.random() * window.innerWidth;
+                const endY = Math.random() * window.innerHeight;
+                
+                particle.style.left = startX + 'px';
+                particle.style.top = startY + 'px';
+                
+                document.body.appendChild(particle);
+                
+                // Animar partícula
+                particle.animate([
+                    { left: startX + 'px', top: startY + 'px', opacity: 1 },
+                    { left: endX + 'px', top: endY + 'px', opacity: 0 }
+                ], {
+                    duration: 1000 + Math.random() * 1000,
+                    easing: 'ease-out'
+                });
+                
+                setTimeout(() => particle.remove(), 2000);
+            }
+        }
+
+        function showTemporaryMessage(message) {
+            const msgElement = document.createElement('div');
+            msgElement.style.cssText = `
+                position: fixed;
+                top: 20%;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #6b8e6b;
+                font-size: 1.5rem;
+                text-align: center;
+                z-index: 100;
+                letter-spacing: 0.1em;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            `;
+            msgElement.textContent = message;
+            document.body.appendChild(msgElement);
+            
+            setTimeout(() => {
+                msgElement.style.transition = 'opacity 1s';
+                msgElement.style.opacity = '0';
+                setTimeout(() => msgElement.remove(), 1000);
+            }, 2000);
+        }
+
+        function goBack() {
+            window.location.href = 'desangrar_se_web.html';
+        }
+
+        // Auto-focus en el input
+        input.focus();
+    </script>
+</body>
+</html>

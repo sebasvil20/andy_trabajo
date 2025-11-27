@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DESANGRAR(SE) - andy 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        .glitch {
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(-2px, 2px); }
+            66% { transform: translate(2px, -2px); }
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, #1a0a0a 0%, #0a0a0a 100%);
+            border-bottom: 2px solid #4a1515;
+        }
+
+        h1 {
+            font-size: 5rem;
+            color: #8b1a1a;
+            letter-spacing: 0.1em;
+            text-shadow: 3px 3px 0 #2d0d0d;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #6b8e6b;
+            letter-spacing: 0.3em;
+            margin-top: 10px;
+        }
+
+        .scream-text {
+            font-size: 1rem;
+            color: #8b1a1a;
+            margin-top: 20px;
+            line-height: 1.4;
+            letter-spacing: 0.05em;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 40px;
+            background-color: #0f0f0f;
+            border: 1px solid #4a1515;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #b8b8b8;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .forces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .force-card {
+            background-color: #0f0f0f;
+            border: 2px solid #4a1515;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .force-card:hover {
+            border-color: #8b1a1a;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 26, 26, 0.3);
+        }
+
+        .force-card h3 {
+            color: #8b1a1a;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+        }
+
+        .force-card p {
+            color: #b8b8b8;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .interactive-section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .interactive-section h2 {
+            font-size: 2.5rem;
+            color: #8b1a1a;
+            margin-bottom: 50px;
+            letter-spacing: 0.1em;
+        }
+
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .interactive-item {
+            background-color: #0f0f0f;
+            border: 2px solid #2d0d0d;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-item:hover {
+            border-color: #8b1a1a;
+            background-color: #1a0a0a;
+        }
+
+        .interactive-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 26, 26, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .interactive-item:hover::before {
+            left: 100%;
+        }
+
+        .interactive-item h4 {
+            color: #6b8e6b;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.1em;
+        }
+
+        .interactive-item p {
+            color: #8b1a1a;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .statement-section {
+            background-color: #0f0f0f;
+            border: 2px solid #4a1515;
+            padding: 60px 40px;
+            margin: 80px 0;
+        }
+
+        .statement-section h2 {
+            color: #8b1a1a;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+
+        .statement-section p {
+            color: #b8b8b8;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .statement-section .highlight {
+            color: #8b1a1a;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #0f0f0f;
+            border-top: 2px solid #4a1515;
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: #6b8e6b;
+            letter-spacing: 0.2em;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .forces-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .blood-drip {
+            position: fixed;
+            top: -10px;
+            width: 2px;
+            height: 0;
+            background-color: #8b1a1a;
+            animation: drip 3s ease-in infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes drip {
+            0% { height: 0; top: -10px; }
+            50% { height: 100vh; top: -10px; }
+            100% { height: 0; top: 100vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="blood-drip" style="left: 10%;"></div>
+    <div class="blood-drip" style="left: 50%; animation-delay: 1s;"></div>
+    <div class="blood-drip" style="left: 80%; animation-delay: 2s;"></div>
+
+    <header class="glitch">
+        <h1>DESANGRAR(SE)</h1>
+    </header>
+
+    <main>
+        <section class="interactive-section">
+            <h2>HABITA EL QUIEBRE</h2>
+            <p style="margin-bottom: 40px; color: #6b8e6b; font-style: italic;">
+                Haz clic en cada elemento para sentir su resonancia
+            </p>
+            
+            <div class="interactive-grid">
+                <div class="interactive-item" onclick="playSound('breath')">
+                    <h4>respiración rota</h4>
+                    <p>inhala el quiebre</p>
+                </div>
+
+                <div class="interactive-item" onclick="window.location.href='grito.html'">
+                    <h4>grito contenido</h4>
+                    <p>libera la convulsión</p>
+                </div>
+
+                <div class="interactive-item" onclick="playSound('heartbeat')">
+                    <h4>latido manchado</h4>
+                    <p>pulso de altar</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="intro-section">
+            <p>
+                ... todo esto que me habita. Por desbordarme sin contención. Por reventar.
+            </p>
+            <p>
+                Siente mucho, siente poco, llora pero no llores, nunca grites. La rabia está mal, la ira está mal. 
+                Hay que ser bueno - con el otro, contigo - pero sin sentir demasiado. No muestres. No seas frágil. 
+                No pares de correr. No hay tiempo para sentir, solo para hacer, hacer, hacer.
+            </p>
+            <p>
+                <em>Sociedad insomne, agotada de estar despierta.</em>
+            </p>
+            <p>
+                El cuerpo obediente se vuelve convulsión. La rabia guardada se desborda como herida abierta. 
+                El dolor se consagra en altar. Todas las versiones fragmentadas de ti habitan la misma piel y gritan en frenesí simultáneo.
+            </p>
+            <p>
+                <strong style="color: #8b1a1a;">Rabia divina. Culto al dolor.</strong><br>
+                A uno no le queda más que DESANGRAR(SE).
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p style="font-size: 1.2rem; margin-bottom: 10px;">DESANGRAR(SE)</p>
+        <p style="font-size: 0.9rem; margin-bottom: 10px;">2025</p>
+        <p style="font-size: 0.8rem;">El desborde no aguarda presupuestos</p>
+    </footer>
+
+    <script>
+        function playSound(type) {
+            // Aquí irían tus archivos de audio
+            console.log(`Reproduciendo sonido: ${type}`);
+            
+            // Efecto visual al hacer clic
+            event.target.style.backgroundColor = '#2d0d0d';
+            setTimeout(() => {
+                event.target.style.backgroundColor = '#0f0f0f';
+            }, 200);
+            
+            // Simulación de sonido (alerta temporal)
+            const soundDescriptions = {
+                'breath': 'Respiración entrecortada, como si el aire pesara...',
+                'scream': 'Un grito ahogado que finalmente explota...',
+                'heartbeat': 'Latidos irregulares, manchados de culpa...',
+                'static': 'Estática perpetua, el insomnio sonoro...',
+                'drip': 'Sangre goteando lentamente sobre el altar...',
+                'whisper': 'Múltiples voces fragmentadas que se superponen...'
+            };
+            
+            // Mostrar descripción del sonido temporalmente
+            const description = document.createElement('div');
+            description.textContent = soundDescriptions[type];
+            description.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(10, 10, 10, 0.95);
+                color: #8b1a1a;
+                padding: 30px 50px;
+                border: 2px solid #4a1515;
+                font-size: 1.2rem;
+                z-index: 1000;
+                text-align: center;
+                max-width: 80%;
+            `;
+            document.body.appendChild(description);
+            
+            setTimeout(() => {
+                description.remove();
+            }, 2000);
+        }
+
+        // Efecto de glitch aleatorio en el título
+        setInterval(() => {
+            const title = document.querySelector('h1');
+            title.style.textShadow = `${Math.random() * 5}px ${Math.random() * 5}px 0 #2d0d0d`;
+        }, 3000);
+    </script>
+</body>
+</html>
