@@ -169,6 +169,10 @@
             letter-spacing: 0.05em;
         }
 
+        .instruction--secondary {
+            margin-top: 30px;
+        }
+
         /* Efecto de partículas de fondo */
         .particle {
             position: fixed;
@@ -181,19 +185,24 @@
 </head>
 <body>
     <div class="container">
-        <h1>GRITA AL VACÍO</h1>
-        <p class="instruction">Escribe lo que necesitas liberar. Presiona ENTER para desangrarlo.</p>
+        <h1>YA NO CABE</h1>
+        <p class="instruction">No pidas permiso para gritar</p>
         
         <input 
             type="text" 
             id="screamInput" 
-            placeholder="escribe aquí tu convulsión..."
+            placeholder="desangrate, desbordate..."
             maxlength="100"
         >
+        <p class="instruction instruction--secondary">Ya no queda nada más que</p>
         
         <div class="button-container">
-            <button onclick="screamIntoVoid()">DESANGRAR</button>
-            <button class="back-button" onclick="goBack()">VOLVER</button>
+            <button onclick="screamIntoVoid()">GRITAR</button>
+            <button class="back-button" onclick="goBack()" aria-label="Volver">
+                <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 18L9 12L15 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
         </div>
 
         <p class="void-message">
@@ -341,7 +350,7 @@
         }
 
         function goBack() {
-            window.location.href = 'index.html';
+            window.location.href = '/index.html';
         }
 
         // Auto-focus en el input
