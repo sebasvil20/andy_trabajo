@@ -211,6 +211,10 @@
         </p>
     </div>
 
+    <audio id="screamAudio" preload="auto">
+        <source src="VOID_4.sub.01.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         const input = document.getElementById('screamInput');
         let screamCount = 0;
@@ -231,6 +235,13 @@
                 setTimeout(() => input.classList.remove('shake'), 500);
                 return;
             }
+
+            // Reproducir el audio del grito
+            const screamAudio = document.getElementById('screamAudio');
+            screamAudio.currentTime = 0; // Reiniciar el audio si ya estaba reproduciéndose
+            screamAudio.play().catch(error => {
+                console.log('Error al reproducir audio:', error);
+            });
 
             screamCount++;
 

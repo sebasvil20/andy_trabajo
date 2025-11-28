@@ -321,6 +321,10 @@
         <p style="font-size: 0.8rem;">El desborde no aguarda presupuestos</p>
     </footer>
 
+    <audio id="backgroundAudio" autoplay loop preload="auto" muted>
+        <source src="glitchwhitenoise.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         function playSound(type) {
             // Aquí irían tus archivos de audio
@@ -371,6 +375,52 @@
             const title = document.querySelector('h1');
             title.style.textShadow = `${Math.random() * 5}px ${Math.random() * 5}px 0 #2d0d0d`;
         }, 3000);
+
+        // Lógica de audio de fondo
+        const audio = document.getElementById('backgroundAudio');
+        audio.volume = 0.1;
+        
+        // Función para desmutear el audio
+        function unmuteAudio() {
+            audio.muted = false;
+        }
+        
+        // Función para intentar reproducir el audio
+        function playAudio() {
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        console.log('Audio reproduciéndose');
+                        // Intentar desmutear después de iniciar la reproducción
+                        unmuteAudio();
+                    })
+                    .catch(error => {
+                        console.log('Reproducción bloqueada, esperando interacción del usuario');
+                    });
+            }
+        }
+        
+        // Intentar reproducir cuando la página carga
+        window.addEventListener('load', () => {
+            playAudio();
+        });
+        
+        // Intentar reproducir y desmutear cuando el usuario interactúa (click, touch, keypress)
+        const userEvents = ['click', 'touchstart', 'keydown'];
+        userEvents.forEach(event => {
+            document.addEventListener(event, () => {
+                unmuteAudio();
+                if (audio.paused) {
+                    playAudio();
+                }
+            }, { once: true });
+        });
+        
+        // También intentar cuando el audio está listo
+        audio.addEventListener('canplaythrough', () => {
+            playAudio();
+        });
     </script>
 </body>
 </html>
