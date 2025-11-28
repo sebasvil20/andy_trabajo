@@ -103,13 +103,27 @@
         }
 
         .back-button {
-            border-color: #6b8e6b;
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background-color: transparent;
+            border: none;
             color: #6b8e6b;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
         }
 
         .back-button:hover {
-            background-color: #6b8e6b;
-            color: #0a0a0a;
+            color: #8b1a1a;
+            transform: scale(1.1);
+        }
+
+        .back-button svg {
+            width: 26px;
+            height: 26px;
+            display: block;
         }
 
         .scream-text {
@@ -196,13 +210,14 @@
         >
         <p class="instruction instruction--secondary">Ya no queda nada más que</p>
         
+        <button class="back-button" onclick="goBack()" aria-label="Volver">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 18L9 12L15 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+
         <div class="button-container">
             <button onclick="screamIntoVoid()">GRITAR</button>
-            <button class="back-button" onclick="goBack()" aria-label="Volver">
-                <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15 18L9 12L15 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </button>
         </div>
 
         <p class="void-message">
