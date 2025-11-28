@@ -187,6 +187,55 @@
             margin-top: 30px;
         }
 
+        .continue-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 100;
+            color: #6b8e6b;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            line-height: 2;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .continue-message.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .continue-message .continue-link {
+            color: #8b1a1a;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: #8b1a1a;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .continue-message .continue-link:hover {
+            color: #6b8e6b;
+            text-decoration-color: #6b8e6b;
+            transform: scale(1.05);
+        }
+
+        #screamInput:disabled,
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .container.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
         /* Efecto de partículas de fondo */
         .particle {
             position: fixed;
@@ -226,6 +275,11 @@
         </p>
     </div>
 
+    <div id="continueMessage" class="continue-message">
+        <p>Aquí nadie te puede juzgar</p>
+        <p>¿Todavía cabe? <span class="continue-link" onclick="continueScreaming()">Sigue gritando</span></p>
+    </div>
+
     <audio id="screamAudio" preload="auto">
         <source src="VOID_4.sub.01.mp3" type="audio/mpeg">
     </audio>
@@ -249,6 +303,23 @@
                 input.classList.add('shake');
                 setTimeout(() => input.classList.remove('shake'), 500);
                 return;
+            }
+
+            // Ocultar todo el contenedor inmediatamente
+            const container = document.querySelector('.container');
+            if (container) {
+                container.classList.add('hidden');
+            }
+
+            // Ocultar mensaje de continuar si está visible
+            const continueMessage = document.getElementById('continueMessage');
+            continueMessage.classList.remove('visible');
+
+            // Deshabilitar input y botón durante las animaciones
+            input.disabled = true;
+            const screamButton = document.querySelector('.button-container button');
+            if (screamButton) {
+                screamButton.disabled = true;
             }
 
             // Reproducir el audio del grito
@@ -293,6 +364,36 @@
             } else if (screamCount === 20) {
                 showTemporaryMessage('Ya no cabe más adentro...');
             }
+
+            // Calcular tiempo total de animaciones: última animación inicia en (numberOfScreams * 30ms) y dura 2000ms
+            const animationDuration = (numberOfScreams * 30) + 2000;
+            
+            // Mostrar mensaje de continuar después de que terminen las animaciones
+            setTimeout(() => {
+                continueMessage.classList.add('visible');
+            }, animationDuration);
+        }
+
+        function continueScreaming() {
+            // Ocultar mensaje
+            const continueMessage = document.getElementById('continueMessage');
+            continueMessage.classList.remove('visible');
+
+            // Mostrar contenedor de nuevo
+            const container = document.querySelector('.container');
+            if (container) {
+                container.classList.remove('hidden');
+            }
+
+            // Habilitar input y botón
+            input.disabled = false;
+            const screamButton = document.querySelector('.button-container button');
+            if (screamButton) {
+                screamButton.disabled = false;
+            }
+
+            // Enfocar el input
+            input.focus();
         }
 
         function createScreamExplosion(text) {
